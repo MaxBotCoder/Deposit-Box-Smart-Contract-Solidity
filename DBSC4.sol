@@ -37,7 +37,7 @@ contract TokenDeposit {
     }
     
     function WithdrawMoney (address ToWhom, uint AmountToWithdraw) public {
-        if(AmountToWithdraw <= transaction[msg.sender]._ValueStored && AmountToWithdraw > 0){
+        require(AmountToWithdraw <= transaction[msg.sender]._ValueStored && AmountToWithdraw > 0, "Transfer amount exceeds or is below a valid quantity");
         payable(ToWhom).call{value: AmountToWithdraw}("");
         transaction[msg.sender]._ValueStored -= AmountToWithdraw;   
         transaction[msg.sender]._WithdrawlValue = AmountToWithdraw;
@@ -45,6 +45,5 @@ contract TokenDeposit {
         Interactions[msg.sender]++;
         transaction[msg.sender]._TransactionNumber = Interactions[msg.sender];
         specifictransaction[msg.sender][Interactions[msg.sender]] = SpecificTransaction(transaction[msg.sender]._ValueStored, 0, transaction[msg.sender]._WithdrawlValue = AmountToWithdraw, ToWhom, transaction[msg.sender]._TransactionTime);
-        }
     }
 }
