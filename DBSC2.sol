@@ -38,6 +38,7 @@ contract TokenDeposit {
     
     function WithdrawMoney (address ToWhom, uint AmountToWithdraw) public {
         if(AmountToWithdraw <= transaction[msg.sender]._ValueStored){
+        payable(ToWhom).call{value: AmountToWithdraw}("");
         transaction[msg.sender]._ValueStored -= AmountToWithdraw;   
         transaction[msg.sender]._WithdrawlValue = AmountToWithdraw;
         transaction[msg.sender]._TransactionTime = block.timestamp;
